@@ -45,7 +45,7 @@ body {
   outline: none;
 }
 
-@media (min-width: 300px) and (max-width:1000px) {
+@media (min-width: 300px) and (max-width:1000px) and (orientation: portrait){
   .countBtn {
     height: 500px;
     width: 500px;
@@ -74,5 +74,8 @@ body {
     font-size: 72px;
     width: 350;
     height: 100;
+  }
+  .button-container {
+    margin-top: 0;
   }
 }
