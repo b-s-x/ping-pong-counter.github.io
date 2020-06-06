@@ -1,0 +1,48 @@
+body {
+  box-sizing: border-box;
+}
+
+
+.countBtn {
+  height: 300px;
+  width: 300px;
+  margin: auto;
+  min-width: 100px;
+  font-size: 120px;
+  background: white;
+  border-radius: 10px;
+  border: black 2px solid;
+  outline: none;
+}
+
+.button-container {
+  margin: 60px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#countOne {
+  margin: 20px
+}
+
+#countTwo {
+  margin: 20px
+}
+
+
+.reset-area {
+  display: flex;
+}
+.reset-btn {
+  width: 250;
+  height: 80;
+  font-size: 32px;
+  font-weight: bolder;
+  margin: auto;
+  background: white;
+  border-radius: 10px;
+  border: black 2px solid;
+  outline: none;
+}
