@@ -46,3 +46,35 @@ body {
   border: black 2px solid;
   outline: none;
 }
+
+@media (max-width:1000px) {
+  .countBtn {
+    height: 500px;
+    width: 500px;
+    font-size: 320px;
+  }
+
+  .button-container {
+      margin-top: 450px;
+  }
+
+  .reset-btn {
+    font-size: 72px;
+    width: 350;
+    height: 100;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
