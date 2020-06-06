@@ -63,3 +63,17 @@ body {
     margin-top: 40%;
   }
 }
+
+@media only (device-width: 320px) and (orientation:landscape) {
+  .countBtn {
+    height: 350px;
+    width: 350px;
+    font-size: 240px;
+  }
+
+  .reset-btn {
+    font-size: 72px;
+    width: 350;
+    height: 100;
+  }
+}
