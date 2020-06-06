@@ -2,7 +2,6 @@ body {
   box-sizing: border-box;
 }
 
-
 .countBtn {
   height: 300px;
   width: 300px;
@@ -47,15 +46,11 @@ body {
   outline: none;
 }
 
-@media (max-width:1000px) {
+@media (min-width: 300px) and (max-width:1000px) {
   .countBtn {
     height: 500px;
     width: 500px;
     font-size: 320px;
-  }
-
-  .button-container {
-      margin-top: 450px;
   }
 
   .reset-btn {
@@ -64,17 +59,3 @@ body {
     height: 100;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
