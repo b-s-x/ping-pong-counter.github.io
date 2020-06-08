@@ -12,10 +12,10 @@ body {
   border-radius: 10px;
   border: black 2px solid;
   outline: none;
+  touch-action: none;
 }
 
 .button-container {
-  /* margin: 60px; */
   margin-bottom: 30px;
   display: flex;
   align-items: center;
