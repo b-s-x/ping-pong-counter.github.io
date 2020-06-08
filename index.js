@@ -15,6 +15,7 @@ const makeCounter = () => {
       let timer = 0;
 
       button.addEventListener('click', () => {
+
         timer = setTimeout(() => {
           if(!prevent) {
             newCounter.getCount()
@@ -24,7 +25,8 @@ const makeCounter = () => {
         }, 300);
       })
 
-      button.addEventListener('dblclick', () => {
+      button.addEventListener('dblclick', (e) => {
+        e.preventDefault();
         prevent = true;
         clearTimeout(timer);
         newCounter.sub()
