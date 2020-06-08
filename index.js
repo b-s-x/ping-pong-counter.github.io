@@ -6,7 +6,6 @@ const makeCounter = () => {
   let data = 0;
 
   return {
-    timeoutID: null,
     getCount: () => data++,
     reset: () => data = 0,
     sub: () => data--,
