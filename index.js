@@ -28,7 +28,7 @@ const makeCounter = () => {
       button.addEventListener('dblclick', () => {
         prevent = true;
         clearTimeout(timer);
-        button.innerHTML = newCounter.sub()
+        newCounter.sub()
         button.innerHTML = newCounter.data()
       })
     }
