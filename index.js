@@ -3,40 +3,47 @@ const countButtonTwo = document.querySelector('#countTwo')
 const resetButton = document.querySelector('.reset-btn')
 
 const makeCounter = () => {
-  let data = 1;
+  let data = 0;
 
   return {
-    getCount: function() {
-    return data++;
-    },
-    reset: function() {
-      data = 1;
-    },
-    sub: function() {
-      return data--
+    timeoutID: null,
+    getCount: () => data++,
+    reset: () => data = 0,
+    sub: () => data--,
+    data: () => data,
+    throttle: (button, newCounter) => {
+      let prevent = false;
+      let timer = 0;
+
+      button.addEventListener('click', () => {
+        timer = setTimeout(() => {
+          if(!prevent) {
+            newCounter.getCount()
+            button.innerHTML = newCounter.data()
+          }
+          prevent = false;
+        }, 300);
+      })
+
+      button.addEventListener('dblclick', () => {
+        prevent = true;
+        clearTimeout(timer);
+        button.innerHTML = newCounter.sub()
+        button.innerHTML = newCounter.data()
+      })
     }
   }
+  return data;
 }
 
 let counterOne = makeCounter();
 let counterTwo = makeCounter();
 
-countButtonOne.addEventListener('click', () => {
-  countButtonOne.innerHTML = counterOne.getCount()
-});
-
-countButtonTwo.addEventListener('click', () => {
-  countButtonTwo.innerHTML = counterTwo.getCount();
-});
-
 resetButton.addEventListener('click', () => {
-  counterOne.reset();
-  counterTwo.reset();
+  counterOne.reset() & counterTwo.reset();
   countButtonOne.innerHTML = 0;
   countButtonTwo.innerHTML = 0;
 })
 
-
-// countButtonTwo.addEventListener('dblclick', () => {
-//   countButtonTwo.innerHTML = counterTwo.sub();
-// });
+counterOne.throttle(countButtonOne, counterOne);
+counterTwo.throttle(countButtonTwo, counterTwo);
