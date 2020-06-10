@@ -48,7 +48,7 @@ const makeHandler = (newMakeCounter, button) => {
         button.innerHTML = newMakeCounter.data()
       }
       counter = 0;
-    }, 200);
+    }, 250);
 
     return () => {
       counter += 1;
