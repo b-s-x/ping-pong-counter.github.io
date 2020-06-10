@@ -31,7 +31,7 @@ let counterOne = makeCounter();
 let counterTwo = makeCounter();
 
 resetButton.addEventListener('click', () => {
-  counterOne.reset() && counterTwo.reset();
+  counterOne.reset() & counterTwo.reset();
   countButtonOne.innerHTML = 0;
   countButtonTwo.innerHTML = 0;
 })
