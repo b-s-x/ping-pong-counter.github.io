@@ -10,41 +10,51 @@ const makeCounter = () => {
     reset: () => data = 0,
     sub: () => data--,
     data: () => data,
-    throttle: (button, newCounter) => {
-      let prevent = false;
-      let timer = 0;
+    debounce: (func, wait) => {
+      let timeout;
 
-      button.addEventListener('click', () => {
+      return function exeFunc() {
 
-        timer = setTimeout(() => {
-          if(!prevent) {
-            newCounter.getCount()
-            button.innerHTML = newCounter.data()
-          }
-          prevent = false;
-        }, 300);
-      })
+      const later = () => {
+          timeout = null;
+          func.apply(this, arguments);
+        }
 
-      button.addEventListener('dblclick', (e) => {
-        e.preventDefault();
-        prevent = true;
-        clearTimeout(timer);
-        newCounter.sub()
-        button.innerHTML = newCounter.data()
-      })
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      }
     }
-  }
-  return data;
-}
+  };
+};
 
 let counterOne = makeCounter();
 let counterTwo = makeCounter();
 
 resetButton.addEventListener('click', () => {
-  counterOne.reset() & counterTwo.reset();
+  counterOne.reset() && counterTwo.reset();
   countButtonOne.innerHTML = 0;
   countButtonTwo.innerHTML = 0;
 })
 
-counterOne.throttle(countButtonOne, counterOne);
-counterTwo.throttle(countButtonTwo, counterTwo);
+const makeHandler = (newMakeCounter, button) => {
+    let counter = 0;
+
+    const handleCounter = newMakeCounter.debounce(() => {
+      if ((counter % 2) === 1) {
+        newMakeCounter.getCount()
+        button.innerHTML = newMakeCounter.data()
+      } else {
+        newMakeCounter.sub()
+        button.innerHTML = newMakeCounter.data()
+      }
+      counter = 0;
+    }, 200);
+
+    return () => {
+      counter += 1;
+      handleCounter();
+    };
+};
+
+countButtonOne.addEventListener('click', makeHandler(counterOne, countButtonOne));
+countButtonTwo.addEventListener('click', makeHandler(counterTwo, countButtonTwo));
