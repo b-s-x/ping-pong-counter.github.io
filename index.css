@@ -37,6 +37,8 @@ body {
 
 .reset-area {
   display: flex;
+  width: 450px;
+  margin: auto;
 }
 .reset-btn {
   width: 250;
@@ -73,6 +75,22 @@ body {
   min-height: 80px;
 }
 
+.circle {
+  border: 1px solid black;
+  height: 50px;
+  width: 50px;
+  background: black;
+  border-radius: 50%;
+  margin-top: 15px;
+}
+
+#circle-one {
+  display: none
+}
+
+#circle-two {
+  display: none
+}
 
 
 
