@@ -3,6 +3,8 @@ const countButtonTwo = document.querySelector('#countTwo')
 const resetButton = document.querySelector('.reset-btn')
 const scoreOne = document.querySelector('#part-score-one')
 const scoreTwo = document.querySelector('#part-score-two')
+const circleOne = document.querySelector('#circle-one')
+const circleTwo = document.querySelector('#circle-two')
 
 const makeCounter = () => {
   let data = 0;
@@ -16,7 +18,7 @@ const makeCounter = () => {
     },
     sub: () => data--,
     score: () => score,
-    data: () => {
+    dated: () => {
       if(data >= 11) {
         score++;
         data = 0
@@ -35,11 +37,6 @@ const makeCounter = () => {
         timeout = setTimeout(later, wait);
       }
     },
-    scoreFunc: (counter, scoreField) => {
-      if(counter.data >= 11) {
-        scoreField.innerHTML = counter.score()
-      }
-    }
   };
 };
 
@@ -51,20 +48,33 @@ resetButton.addEventListener('click', () => {
   countButtonOne.innerHTML = 0;
   countButtonTwo.innerHTML = 0;
   scoreOne.innerHTML = 0;
-  scoreTwo.innerHTML = 0;  
+  scoreTwo.innerHTML = 0;
 })
 
-const makeHandler = (newMakeCounter, button, scoreField) => {
+const commonScore = (circleOne, circleTwo) => {
+  let comScore = counterOne.dated() + counterTwo.dated()
+    let x = Math.floor(comScore / 2) % 2
+    if(x == 0) {
+        circleOne.style.opacity = 1;
+        circleTwo.style.opacity = 0;
+    } else if (x == 1) {
+        circleTwo.style.opacity = 1;
+        circleOne.style.opacity = 0;
+    }
+  }
+
+const makeHandler = (newMakeCounter, button, scoreField, circleOne, circleTwo) => {
     let counter = 0;
 
     const handleCounter = newMakeCounter.debounce(() => {
       if ((counter % 2) === 1) {
         newMakeCounter.getCount()
-        button.innerHTML = newMakeCounter.data()
+        button.innerHTML = newMakeCounter.dated()
         scoreField.innerHTML = newMakeCounter.score()
+        commonScore(circleOne, circleTwo)
       } else {
         newMakeCounter.sub()
-        button.innerHTML = newMakeCounter.data()
+        button.innerHTML = newMakeCounter.dated()
       }
       counter = 0;
     }, 250);
@@ -75,5 +85,5 @@ const makeHandler = (newMakeCounter, button, scoreField) => {
     };
 };
 
-countButtonOne.addEventListener('click', makeHandler(counterOne, countButtonOne, scoreOne));
-countButtonTwo.addEventListener('click', makeHandler(counterTwo, countButtonTwo, scoreTwo));
+countButtonOne.addEventListener('click', makeHandler(counterOne, countButtonOne, scoreOne, circleOne, circleTwo));
+countButtonTwo.addEventListener('click', makeHandler(counterTwo, countButtonTwo, scoreTwo, circleOne, circleTwo));
