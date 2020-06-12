@@ -58,8 +58,8 @@ const commonScore = (circleOne, circleTwo) => {
         circleOne.style.opacity = 1;
         circleTwo.style.opacity = 0;
     } else if (x == 1) {
-        circleTwo.style.opacity = 1
-        circleOne.style.opacity = 0
+        circleTwo.style.opacity = 1;
+        circleOne.style.opacity = 0;
     }
   }
 
