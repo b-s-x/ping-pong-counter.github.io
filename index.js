@@ -51,25 +51,19 @@ resetButton.addEventListener('click', () => {
   scoreTwo.innerHTML = 0;
 })
 
-const commonScore = (circle) => {
-  let comScore = 0;
-  console.log(comScore);
- if(comScore <= 2) {
-   circle.style.display = "block";
-   comScore += 1
- } else if(comScore > 2) {
-   circle.style.display = "none"
-   comScore = null
- }
-  // else if() {
- //   circleTwo.style.display = "block"
- //   circleOne.style.display = "none"
- //  }
+const commonScore = (circleOne, circleTwo) => {
+  let comScore = counterOne.dated() + counterTwo.dated()
+    let x = Math.floor(comScore / 2) % 2
+    if(x == 0) {
+        circleOne.style.opacity = 1;
+        circleTwo.style.opacity = 0;
+    } else if (x == 1) {
+        circleTwo.style.opacity = 1
+        circleOne.style.opacity = 0
+    }
   }
-}
 
-
-const makeHandler = (newMakeCounter, button, scoreField) => {
+const makeHandler = (newMakeCounter, button, scoreField, circleOne, circleTwo) => {
     let counter = 0;
 
     const handleCounter = newMakeCounter.debounce(() => {
@@ -77,6 +71,7 @@ const makeHandler = (newMakeCounter, button, scoreField) => {
         newMakeCounter.getCount()
         button.innerHTML = newMakeCounter.dated()
         scoreField.innerHTML = newMakeCounter.score()
+        commonScore(circleOne, circleTwo)
       } else {
         newMakeCounter.sub()
         button.innerHTML = newMakeCounter.dated()
@@ -90,8 +85,5 @@ const makeHandler = (newMakeCounter, button, scoreField) => {
     };
 };
 
-countButtonOne.addEventListener('click', makeHandler(counterOne, countButtonOne, scoreOne));
-countButtonTwo.addEventListener('click', makeHandler(counterTwo, countButtonTwo, scoreTwo));
-
-countButtonOne.addEventListener('click', commonScore(circleOne));
-countButtonTwo.addEventListener('click', commonScore(circleTwo));
+countButtonOne.addEventListener('click', makeHandler(counterOne, countButtonOne, scoreOne, circleOne, circleTwo));
+countButtonTwo.addEventListener('click', makeHandler(counterTwo, countButtonTwo, scoreTwo, circleOne, circleTwo));
