@@ -54,13 +54,9 @@ resetButton.addEventListener('click', () => {
 const commonScore = (circleOne, circleTwo) => {
   let comScore = counterOne.dated() + counterTwo.dated()
     let x = Math.floor(comScore / 2) % 2
-    if(x == 0) {
-        circleOne.style.opacity = 1;
-        circleTwo.style.opacity = 0;
-    } else if (x == 1) {
-        circleTwo.style.opacity = 1;
-        circleOne.style.opacity = 0;
-    }
+
+    circleTwo.style.opacity = x;
+    circleOne.style.opacity = 1 - x
   }
 
 const makeHandler = (newMakeCounter, button, scoreField, circleOne, circleTwo) => {
