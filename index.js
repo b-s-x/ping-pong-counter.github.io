@@ -59,7 +59,7 @@ const localReset = () => {
   let one = counterOne.dated(); //получаем счет каждого каунтера
   let two = counterTwo.dated();
 
-  if(one > 10) {
+  if(one >=10) {
     counterOne.getScore(); // прибавляем счет в партии score
     scoreOne.innerHTML = counterOne.score() // обновляем поле счета в партии view
     counterOne.locResest(); // обнуляем data для первого каунтера
@@ -67,7 +67,7 @@ const localReset = () => {
     countButtonOne.innerHTML = 0; // обнуляем view клиента
     countButtonTwo.innerHTML = 0;
 
-  } else if (two > 10) {
+  } else if (two >=10) {
     counterTwo.getScore();
     scoreTwo.innerHTML = counterTwo.score()
     counterOne.locResest();
