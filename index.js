@@ -16,15 +16,11 @@ const makeCounter = () => {
       data = 0
       score = 0
     },
+    locResest: () => data = 0,
     sub: () => data--,
     score: () => score,
-    dated: () => {
-      if(data >= 11) {
-        score++;
-        data = 0
-        }
-      return data
-    },
+    getScore: () => score++,
+    dated: () => data,
     debounce: (func, wait) => {
       let timeout;
 
@@ -59,6 +55,28 @@ const commonScore = (circleOne, circleTwo) => {
     circleOne.style.opacity = 1 - x
   }
 
+const localReset = () => {
+  let one = counterOne.dated(); //получаем счет каждого каунтера
+  let two = counterTwo.dated();
+
+  if(one > 10) {
+    counterOne.getScore(); // прибавляем счет в партии score
+    scoreOne.innerHTML = counterOne.score() // обновляем поле счета в партии view
+    counterOne.locResest(); // обнуляем data для первого каунтера
+    counterTwo.locResest();
+    countButtonOne.innerHTML = 0; // обнуляем view клиента
+    countButtonTwo.innerHTML = 0;
+
+  } else if (two > 10) {
+    counterTwo.getScore();
+    scoreTwo.innerHTML = counterTwo.score()
+    counterOne.locResest();
+    counterTwo.locResest();
+    countButtonOne.innerHTML = 0;
+    countButtonTwo.innerHTML = 0;
+  }
+};
+
 const makeHandler = (newMakeCounter, button, scoreField, circleOne, circleTwo) => {
     let counter = 0;
 
@@ -67,7 +85,8 @@ const makeHandler = (newMakeCounter, button, scoreField, circleOne, circleTwo) =
         newMakeCounter.getCount()
         button.innerHTML = newMakeCounter.dated()
         scoreField.innerHTML = newMakeCounter.score()
-        commonScore(circleOne, circleTwo)
+        commonScore(circleOne, circleTwo);
+        localReset()
       } else {
         newMakeCounter.sub()
         button.innerHTML = newMakeCounter.dated()
