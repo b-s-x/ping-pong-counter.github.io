@@ -36,6 +36,7 @@ class Counter {
       const later = () => {
         timeout = null;
         func.apply(this, arguments);
+
       }
       clearTimeout(timeout);
       timeout = setTimeout(later, wait);
@@ -84,6 +85,7 @@ const commonScore = (circleOne, circleTwo) => {
     circleTwo.style.opacity = x;
     circleOne.style.opacity = 1 - x
   }
+};
 
 const makeHandler = (newMakeCounter, button, scoreField) => {
     let counter = 0;
@@ -93,6 +95,7 @@ const makeHandler = (newMakeCounter, button, scoreField) => {
         newMakeCounter.setCount() // прибавляем счет
         commonScore(circleOne, circleTwo); // вызываем функцию отображения подачи
         addScore() //прибавляем счет в партии
+
       } else {
         newMakeCounter.sub()
       }

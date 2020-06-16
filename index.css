@@ -40,6 +40,7 @@ body {
   width: 450px;
   margin: auto;
 }
+
 .reset-btn {
   width: 250;
   height: 80;
@@ -90,15 +91,25 @@ body {
 
 #circle-two {
   opacity: 0
-
 }
 
-
-
 @media (min-width: 300px) and (max-width:1000px) and (orientation: portrait){
+
+  #part-score-one {
+    margin-right: -110px;
+    z-index: 100;
+    border: none;
+  }
+
+  #part-score-two {
+    margin-left: -110px;
+    z-index: 100;
+    border: none;
+  }
+
   .countBtn {
-    height: 500px;
-    width: 500px;
+    height: 400px;
+    width: 400px;
     font-size: 350px;
   }
 
@@ -111,9 +122,22 @@ body {
   .button-container {
     margin-top: 50%;
   }
+
+  #circle-one {
+    margin-right: 60px;
+  }
+
+  #circle-two {
+    margin-left: 60px;
+  }
+
+  .reset-area {
+    width: 600px;
+  }
 }
 
 @media only (device-width: 320px) and (orientation:landscape) {
+
   .countBtn {
     height: 300px;
     width: 350px;
@@ -125,6 +149,7 @@ body {
     width: 350;
     height: 80;
   }
+
   .button-container {
     margin: 0;
     margin-bottom: 0;
