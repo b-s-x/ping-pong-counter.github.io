@@ -6,91 +6,100 @@ const scoreTwo = document.querySelector('#part-score-two')
 const circleOne = document.querySelector('#circle-one')
 const circleTwo = document.querySelector('#circle-two')
 
-const makeCounter = () => {
-  let data = 0;
-  let score = 0;
+class Counter {
+  constructor () {
+    this.data = 0;
+    this.score = 0;
+  }
 
-  return {
-    getCount: () => data++,
-    reset: () => {
-      data = 0
-      score = 0
-    },
-    locResest: () => data = 0,
-    sub: () => data--,
-    score: () => score,
-    getScore: () => score++,
-    dated: () => data,
-    debounce: (func, wait) => {
-      let timeout;
+  setCount() { return this.data++ }
 
-      return function exeFunc() {
-        const later = () => {
-          timeout = null;
-          func.apply(this, arguments);
-        }
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
+  allReset() {
+    this.data = 0
+    this.score = 0
+  }
+
+  locReset() { return this.data = 0 }
+
+  sub() { return this.data-- }
+
+  setScore() { return this.score++ }
+
+  getData() { return this.data }
+
+  getScore() { return this.score }
+
+  debounce (func, wait) {
+    let timeout;
+
+    return function exeFunc() {
+      const later = () => {
+        timeout = null;
+        func.apply(this, arguments);
       }
-    },
-  };
-};
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    }
+  }
 
-let counterOne = makeCounter();
-let counterTwo = makeCounter();
+  resetViewCount(buttonCounter, scoreCounter) {
+    buttonCounter.innerHTML = 0;
+    scoreCounter.innerHTML = 0;
+  }
 
-// resetButton.addEventListener('click', () => {
-//   counterOne.reset() & counterTwo.reset();
-//   countButtonOne.innerHTML = 0;
-//   countButtonTwo.innerHTML = 0;
-//   scoreOne.innerHTML = 0;
-//   scoreTwo.innerHTML = 0;
-// })
+  refresh(newCounter, buttonCounter, scoreCounter) {
+    buttonCounter.innerHTML = newCounter.getData()
+    scoreCounter.innerHTML = newCounter.getScore()
+  }
+}
 
-// const commonScore = (circleOne, circleTwo) => {
-//   let comScore = counterOne.dated() + counterTwo.dated()
-//     let x = Math.floor(comScore / 2) % 2
-//
-//     circleTwo.style.opacity = x;
-//     circleOne.style.opacity = 1 - x
-//   }
+const leftCounter = new Counter();
+const rightCounter = new Counter();
 
-const localReset = () => {
-  let one = counterOne.dated(); //получаем счет каждого каунтера
-  let two = counterTwo.dated();
+resetButton.addEventListener('click', () => {
+  leftCounter.allReset() & rightCounter.allReset(); // сбрасываю data
+  leftCounter.resetViewCount(countButtonOne, scoreOne);// сбрасываю view
+  rightCounter.resetViewCount(countButtonTwo, scoreTwo);
+})
+
+const addScore = () => {
+  let one = leftCounter.getData(); //получаем счет каждого каунтера
+  let two = rightCounter.getData();
 
   if(one >=10) {
-    counterOne.getScore(); // прибавляем счет в партии score
-    scoreOne.innerHTML = counterOne.score() // обновляем поле счета в партии view
-    counterOne.locResest(); // обнуляем data для первого каунтера
-    counterTwo.locResest();
-    countButtonOne.innerHTML = 0; // обнуляем view клиента
-    countButtonTwo.innerHTML = 0;
-
+    leftCounter.setScore();// прибавляем счет в партии score
+    leftCounter.locReset(); // обнуляем data для каунтера
+    rightCounter.locReset();
   } else if (two >=10) {
-    counterTwo.getScore();
-    scoreTwo.innerHTML = counterTwo.score()
-    counterOne.locResest();
-    counterTwo.locResest();
-    countButtonOne.innerHTML = 0;
-    countButtonTwo.innerHTML = 0;
+    rightCounter.setScore();
+    leftCounter.locReset();
+    rightCounter.locReset();
   }
 };
 
-const makeHandler = (newMakeCounter, button, scoreField, circleOne, circleTwo) => {
+const commonScore = (circleOne, circleTwo) => {
+  let comScore = leftCounter.getData() + rightCounter.getData()
+    let x = Math.floor(comScore / 2) % 2
+
+    circleTwo.style.opacity = x;
+    circleOne.style.opacity = 1 - x
+  }
+
+const makeHandler = (newMakeCounter, button, scoreField) => {
     let counter = 0;
 
     const handleCounter = newMakeCounter.debounce(() => {
       if ((counter % 2) === 1) {
-        newMakeCounter.getCount()
-        button.innerHTML = newMakeCounter.dated()
-        scoreField.innerHTML = newMakeCounter.score()
-        commonScore(circleOne, circleTwo);
-        localReset()
+        newMakeCounter.setCount() // прибавляем счет
+        commonScore(circleOne, circleTwo); // вызываем функцию отображения подачи
+        addScore() //прибавляем счет в партии
       } else {
         newMakeCounter.sub()
-        button.innerHTML = newMakeCounter.dated()
       }
+      // обновляем view
+      leftCounter.refresh(leftCounter, countButtonOne, scoreOne);
+      rightCounter.refresh(rightCounter, countButtonTwo, scoreTwo);
+
       counter = 0;
     }, 250);
 
@@ -100,5 +109,5 @@ const makeHandler = (newMakeCounter, button, scoreField, circleOne, circleTwo) =
     };
 };
 
-countButtonOne.addEventListener('click', makeHandler(counterOne, countButtonOne, scoreOne, circleOne, circleTwo));
-countButtonTwo.addEventListener('click', makeHandler(counterTwo, countButtonTwo, scoreTwo, circleOne, circleTwo));
+countButtonOne.addEventListener('click', makeHandler(leftCounter, countButtonOne, scoreOne));
+countButtonTwo.addEventListener('click', makeHandler(rightCounter, countButtonTwo, scoreTwo));
