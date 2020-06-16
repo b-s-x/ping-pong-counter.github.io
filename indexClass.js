@@ -27,7 +27,7 @@ class Counter {
 
   getData() { return this.data }
 
-  getScore() { this.score }
+  getScore() { return this.score }
 
   debounce (func, wait) {
     let timeout;
@@ -42,40 +42,63 @@ class Counter {
     }
   }
 
+  resetViewCount(buttonCounter, scoreCounter) {
+    buttonCounter.innerHTML = 0;
+    scoreCounter.innerHTML = 0;
+  }
+
   refresh(newCounter, buttonCounter, scoreCounter) {
     buttonCounter.innerHTML = newCounter.getData()
     scoreCounter.innerHTML = newCounter.getScore()
   }
 }
 
-const leftCounter = new Counter()
-const rightCounter = new Counter()
-
-const refreshOne = leftCounter.refresh(leftCounter, countButtonOne, scoreOne)
-
-
-const viewCount = () => {
-  countButtonOne.innerHTML = 0;
-  countButtonTwo.innerHTML = 0;
-  scoreOne.innerHTML = 0;
-  scoreTwo.innerHTML = 0;
-}
+const leftCounter = new Counter();
+const rightCounter = new Counter();
 
 resetButton.addEventListener('click', () => {
-  leftCounter.allReset() & rightCounter.allReset();
-
+  leftCounter.allReset() & rightCounter.allReset(); // сбрасываю data
+  leftCounter.resetViewCount(countButtonOne, scoreOne);// сбрасываю view
+  rightCounter.resetViewCount(countButtonTwo, scoreTwo);
 })
+
+const addScore = () => {
+  let one = leftCounter.getData(); //получаем счет каждого каунтера
+  let two = rightCounter.getData();
+
+  if(one >=10) {
+    leftCounter.setScore();// прибавляем счет в партии score
+    leftCounter.locReset(); // обнуляем data для каунтера
+    rightCounter.locReset();
+  } else if (two >=10) {
+    counterTwo.setScore();
+    leftCounter.locReset();
+    rightCounter.locReset();
+  }
+};
+
+const commonScore = (circleOne, circleTwo) => {
+  let comScore = leftCounter.getData() + rightCounter.getData()
+    let x = Math.floor(comScore / 2) % 2
+
+    circleTwo.style.opacity = x;
+    circleOne.style.opacity = 1 - x
+  }
 
 const makeHandler = (newMakeCounter, button, scoreField) => {
     let counter = 0;
 
     const handleCounter = newMakeCounter.debounce(() => {
       if ((counter % 2) === 1) {
-        newMakeCounter.setCount()
-        newMakeCounter.getScore()
+        newMakeCounter.setCount() // прибавляем счет
+        commonScore(circleOne, circleTwo); // вызываем функцию отображения подачи
+        addScore() //прибавляем счет в партии
       } else {
         newMakeCounter.sub()
       }
+      // обновляем view
+      leftCounter.refresh(leftCounter, countButtonOne, scoreOne);
+      rightCounter.refresh(rightCounter, countButtonTwo, scoreTwo);
 
       counter = 0;
     }, 250);
