@@ -71,7 +71,7 @@ const addScore = () => {
     leftCounter.locReset(); // обнуляем data для каунтера
     rightCounter.locReset();
   } else if (two >=10) {
-    counterTwo.setScore();
+    rightCounter.setScore();
     leftCounter.locReset();
     rightCounter.locReset();
   }
