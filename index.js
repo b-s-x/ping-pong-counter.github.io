@@ -84,7 +84,6 @@ const commonScore = (circleOne, circleTwo) => {
 
     circleTwo.style.opacity = x;
     circleOne.style.opacity = 1 - x
-  }
 };
 
 const makeHandler = (newMakeCounter, button, scoreField) => {
