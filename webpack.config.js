@@ -5,7 +5,6 @@ module.exports = {
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
-<<<<<<< HEAD
   },
   module: {
     rules: [
@@ -25,7 +24,6 @@ module.exports = {
     ],
   },
 };
-=======
+
   }
 }
->>>>>>> 9a434900e613f168cdb12297b8fd87e72ffe021f
