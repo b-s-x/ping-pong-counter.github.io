@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,10 @@
   },
   "homepage": "https://github.com/b-s-x/ping-pong-counter.github.io#readme",
   "devDependencies": {
+    "css-loader": "^3.6.0",
+    "file-loader": "^6.0.0",
     "sass": "^1.26.8",
+    "style-loader": "^1.2.1",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11"
   }
