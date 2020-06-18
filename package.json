@@ -4,11 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-<<<<<<< HEAD
     "build": "webpack"
-=======
-    "test": "echo \"Error: no test specified\" && exit 1"
->>>>>>> 9a434900e613f168cdb12297b8fd87e72ffe021f
   },
   "repository": {
     "type": "git",
