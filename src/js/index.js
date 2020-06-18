@@ -1,7 +1,6 @@
 import Counter from './counter';
 import '../styles/index.css'
 
-
 const countButtonOne = document.querySelector('#countOne')
 const countButtonTwo = document.querySelector('#countTwo')
 const resetButton = document.querySelector('.reset-btn')
