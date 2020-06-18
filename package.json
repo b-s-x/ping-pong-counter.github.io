@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "start": "webpack-dev-server --open --watch"
   },
   "repository": {
     "type": "git",
@@ -17,15 +18,12 @@
   },
   "homepage": "https://github.com/b-s-x/ping-pong-counter.github.io#readme",
   "devDependencies": {
-<<<<<<< HEAD
     "css-loader": "^3.6.0",
     "file-loader": "^6.0.0",
     "sass": "^1.26.8",
     "style-loader": "^1.2.1",
-=======
-    "sass": "^1.26.8",
->>>>>>> 9a434900e613f168cdb12297b8fd87e72ffe021f
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.11.0"
   }
 }
