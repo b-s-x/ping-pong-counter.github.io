@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 export default class Counter {
+=======
+export class Counter {
+>>>>>>> 9a434900e613f168cdb12297b8fd87e72ffe021f
   constructor () {
     this.data = 0;
     this.score = 0;
