@@ -1,5 +1,5 @@
-import Counter from './counter';
-import '../styles/index.css'
+import '../styles/index.css';
+import PingPong from './pingpong'
 
 const countButtonOne = document.querySelector('#countOne')
 const countButtonTwo = document.querySelector('#countTwo')
@@ -9,8 +9,8 @@ const scoreTwo = document.querySelector('#part-score-two')
 const circleOne = document.querySelector('#circle-one')
 const circleTwo = document.querySelector('#circle-two')
 
-const leftCounter = new Counter();
-const rightCounter = new Counter();
+const leftCounter = new PingPong();
+const rightCounter = new PingPong();
 
 resetButton.addEventListener('click', () => {
   leftCounter.allReset() & rightCounter.allReset(); // сбрасываю data
@@ -18,7 +18,15 @@ resetButton.addEventListener('click', () => {
   rightCounter.resetViewCount(countButtonTwo, scoreTwo);
 })
 
-const addScore = () => {
+const commonScore = (circleOne, circleTwo) => {
+  let comScore = leftCounter.getData() + rightCounter.getData()
+    let x = Math.floor(comScore / 2) % 2
+
+    circleTwo.style.opacity = x;
+    circleOne.style.opacity = 1 - x
+};
+
+const addScore = ()  => {
   let one = leftCounter.getData(); //получаем счет каждого каунтера
   let two = rightCounter.getData();
 
@@ -33,13 +41,6 @@ const addScore = () => {
   }
 };
 
-const commonScore = (circleOne, circleTwo) => {
-  let comScore = leftCounter.getData() + rightCounter.getData()
-    let x = Math.floor(comScore / 2) % 2
-
-    circleTwo.style.opacity = x;
-    circleOne.style.opacity = 1 - x
-};
 
 const makeHandler = (newMakeCounter, button, scoreField) => {
     let counter = 0;
@@ -65,6 +66,7 @@ const makeHandler = (newMakeCounter, button, scoreField) => {
       handleCounter();
     };
 };
+
 
 countButtonOne.addEventListener('click', makeHandler(leftCounter, countButtonOne, scoreOne));
 countButtonTwo.addEventListener('click', makeHandler(rightCounter, countButtonTwo, scoreTwo));
