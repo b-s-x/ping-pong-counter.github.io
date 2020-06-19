@@ -1,5 +1,7 @@
 import '../styles/index.css';
-import PingPong from './pingpong'
+import Counter from './counter'
+import PingPong from './pingpong';
+import View from './view';
 
 const countButtonOne = document.querySelector('#countOne')
 const countButtonTwo = document.querySelector('#countTwo')
@@ -9,29 +11,30 @@ const scoreTwo = document.querySelector('#part-score-two')
 const circleOne = document.querySelector('#circle-one')
 const circleTwo = document.querySelector('#circle-two')
 
-const leftCounter = new PingPong();
-const rightCounter = new PingPong();
+const leftCounter = new Counter();
+const rightCounter = new Counter();
+const leftPingPong = new PingPong();
+const rightPingPong = new PingPong();
+const view = new View()
 
 resetButton.addEventListener('click', () => {
   leftCounter.allReset() & rightCounter.allReset(); // сбрасываю data
-  leftCounter.resetViewCount(countButtonOne, scoreOne);// сбрасываю view
-  rightCounter.resetViewCount(countButtonTwo, scoreTwo);
+  view.resetViewCount(countButtonOne, scoreOne);// сбрасываю view
+  view.resetViewCount(countButtonTwo, scoreTwo);
 })
 
-const makeHandler = (newMakeCounter, button, scoreField) => {
+const makeHandler = (newMakeCounter, button, scoreField, pong) => {
   let counter = 0;
 
-  const handleCounter = newMakeCounter.debounce(() => {
+  const handleCounter = pong.debounce(() => {
     if ((counter % 2) === 1) {
       newMakeCounter.setCount() // прибавляем счет
-      newMakeCounter.commonScore(leftCounter, rightCounter, circleOne, circleTwo); // вызываем функцию отображения подачи
-      newMakeCounter.addScore(leftCounter, rightCounter) //прибавляем счет в партии
+      pong.commonScore(leftCounter, rightCounter, circleOne, circleTwo); // вызываем функцию отображения подачи
+      pong.addScore(leftCounter, rightCounter) //прибавляем счет в партии
     } else {
       newMakeCounter.sub()
     }
-    // обновляем view
-    leftCounter.refresh(leftCounter, countButtonOne, scoreOne);
-    rightCounter.refresh(rightCounter, countButtonTwo, scoreTwo);
+    view.refresh(newMakeCounter, button, scoreField) // обновляем view
 
     counter = 0;
   }, 250);
@@ -42,5 +45,5 @@ const makeHandler = (newMakeCounter, button, scoreField) => {
   };
 };
 
-countButtonOne.addEventListener('click', makeHandler(leftCounter, countButtonOne, scoreOne));
-countButtonTwo.addEventListener('click', makeHandler(rightCounter, countButtonTwo, scoreTwo));
+countButtonOne.addEventListener('click', makeHandler(leftCounter, countButtonOne, scoreOne, leftPingPong));
+countButtonTwo.addEventListener('click', makeHandler(rightCounter, countButtonTwo, scoreTwo, rightPingPong));

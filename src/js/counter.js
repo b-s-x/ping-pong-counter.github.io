@@ -1,3 +1,4 @@
+
 export default class Counter {
   constructor () {
     this.data = 0;
