@@ -1,5 +1,6 @@
 
-export default class Counter {
+
+export default class Counter  {
   constructor () {
     this.data = 0;
     this.score = 0;

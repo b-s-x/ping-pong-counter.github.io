@@ -1,16 +1,4 @@
-import Counter from './counter';
-
-export default class PingPong extends Counter {
-
-  refresh(newCounter, buttonCounter, scoreCounter) {
-    buttonCounter.innerHTML = newCounter.getData()
-    scoreCounter.innerHTML = newCounter.getScore()
-  }
-
-  resetViewCount(buttonCounter, scoreCounter) {
-    buttonCounter.innerHTML = 0;
-    scoreCounter.innerHTML = 0;
-  }
+export default class PingPong {
 
   debounce(func, wait) {
     let timeout;
@@ -31,7 +19,7 @@ export default class PingPong extends Counter {
 
         circleTwo.style.opacity = x;
         circleOne.style.opacity = 1 - x;
-    };
+  }
 
   addScore(counterOne, counterTwo) {
     let one = counterOne.getData(); //получаем счет каждого каунтера
@@ -46,5 +34,5 @@ export default class PingPong extends Counter {
       counterOne.locReset();
       counterTwo.locReset();
     }
-  };
+  }
 };
