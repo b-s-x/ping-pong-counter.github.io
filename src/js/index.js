@@ -18,55 +18,29 @@ resetButton.addEventListener('click', () => {
   rightCounter.resetViewCount(countButtonTwo, scoreTwo);
 })
 
-const commonScore = (circleOne, circleTwo) => {
-  let comScore = leftCounter.getData() + rightCounter.getData()
-    let x = Math.floor(comScore / 2) % 2
-
-    circleTwo.style.opacity = x;
-    circleOne.style.opacity = 1 - x
-};
-
-const addScore = ()  => {
-  let one = leftCounter.getData(); //получаем счет каждого каунтера
-  let two = rightCounter.getData();
-
-  if(one >=10) {
-    leftCounter.setScore();// прибавляем счет в партии score
-    leftCounter.locReset(); // обнуляем data для каунтера
-    rightCounter.locReset();
-  } else if (two >=10) {
-    rightCounter.setScore();
-    leftCounter.locReset();
-    rightCounter.locReset();
-  }
-};
-
-
 const makeHandler = (newMakeCounter, button, scoreField) => {
-    let counter = 0;
+  let counter = 0;
 
-    const handleCounter = newMakeCounter.debounce(() => {
-      if ((counter % 2) === 1) {
-        newMakeCounter.setCount() // прибавляем счет
-        commonScore(circleOne, circleTwo); // вызываем функцию отображения подачи
-        addScore() //прибавляем счет в партии
+  const handleCounter = newMakeCounter.debounce(() => {
+    if ((counter % 2) === 1) {
+      newMakeCounter.setCount() // прибавляем счет
+      newMakeCounter.commonScore(leftCounter, rightCounter, circleOne, circleTwo); // вызываем функцию отображения подачи
+      newMakeCounter.addScore(leftCounter, rightCounter) //прибавляем счет в партии
+    } else {
+      newMakeCounter.sub()
+    }
+    // обновляем view
+    leftCounter.refresh(leftCounter, countButtonOne, scoreOne);
+    rightCounter.refresh(rightCounter, countButtonTwo, scoreTwo);
 
-      } else {
-        newMakeCounter.sub()
-      }
-      // обновляем view
-      leftCounter.refresh(leftCounter, countButtonOne, scoreOne);
-      rightCounter.refresh(rightCounter, countButtonTwo, scoreTwo);
+    counter = 0;
+  }, 250);
 
-      counter = 0;
-    }, 250);
-
-    return () => {
-      counter += 1;
-      handleCounter();
-    };
+  return () => {
+    counter += 1;
+    handleCounter();
+  };
 };
-
 
 countButtonOne.addEventListener('click', makeHandler(leftCounter, countButtonOne, scoreOne));
 countButtonTwo.addEventListener('click', makeHandler(rightCounter, countButtonTwo, scoreTwo));
