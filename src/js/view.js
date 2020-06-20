@@ -8,5 +8,5 @@ export default class View {
   resetViewCount(buttonCounter, scoreCounter) {
     buttonCounter.innerHTML = 0;
     scoreCounter.innerHTML = 0;
-  }  
+  }
 }

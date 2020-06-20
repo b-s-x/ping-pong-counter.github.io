@@ -11,39 +11,58 @@ const scoreTwo = document.querySelector('#part-score-two')
 const circleOne = document.querySelector('#circle-one')
 const circleTwo = document.querySelector('#circle-two')
 
-const leftCounter = new Counter();
-const rightCounter = new Counter();
-const leftPingPong = new PingPong();
-const rightPingPong = new PingPong();
-const view = new View()
-
 resetButton.addEventListener('click', () => {
   leftCounter.allReset() & rightCounter.allReset(); // сбрасываю data
   view.resetViewCount(countButtonOne, scoreOne);// сбрасываю view
   view.resetViewCount(countButtonTwo, scoreTwo);
 })
 
-const makeHandler = (newMakeCounter, button, scoreField, pong) => {
-  let counter = 0;
+const run = () => {
+  const leftCounter = new Counter();
+  const rightCounter = new Counter();
 
-  const handleCounter = pong.debounce(() => {
-    if ((counter % 2) === 1) {
-      newMakeCounter.setCount() // прибавляем счет
-      pong.commonScore(leftCounter, rightCounter, circleOne, circleTwo); // вызываем функцию отображения подачи
-      pong.addScore(leftCounter, rightCounter) //прибавляем счет в партии
-    } else {
-      newMakeCounter.sub()
-    }
-    view.refresh(newMakeCounter, button, scoreField) // обновляем view
+  const game = new PingPong();
+  const view = new View();
 
-    counter = 0;
-  }, 250);
+countButtonOne.addEventListener('click', () => {
+  game.incrementLeft(leftCounter, rightCounter, game)
+  view.refresh(leftCounter, countButtonOne, scoreOne) // обновляем view
+});
 
-  return () => {
-    counter += 1;
-    handleCounter();
-  };
-};
+// countButtonTwo.addEventListener('click', () => {
+//   game.incrementRight(rightCounter, game)
+//   game.addScore(leftCounter, rightCounter) //прибавляем счет в партии
+//   view.refresh(rightCounter, countButtonTwo, scoreTwo) // обновляем view
+// });
+// game.commonScore(leftCounter, rightCounter, circleOne, circleTwo);
 
-countButtonOne.addEventListener('click', makeHandler(leftCounter, countButtonOne, scoreOne, leftPingPong));
-countButtonTwo.addEventListener('click', makeHandler(rightCounter, countButtonTwo, scoreTwo, rightPingPong));
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///
