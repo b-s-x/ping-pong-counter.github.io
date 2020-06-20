@@ -14,11 +14,11 @@ export default class PingPong {
   }
 
   commonScore (counterOne, counterTwo, circleOne, circleTwo) {
-    let comScore = counterOne.getData() + counterTwo.getData()
-    let x = Math.floor(comScore / 2) % 2;
+      let comScore = counterOne.getData() + counterTwo.getData()
+        let x = Math.floor(comScore / 2) % 2
 
-    circleTwo.style.opacity = x;
-    circleOne.style.opacity = 1 - x;
+        circleTwo.style.opacity = x;
+        circleOne.style.opacity = 1 - x;
   }
 
   addScore(counterOne, counterTwo) {
@@ -35,30 +35,4 @@ export default class PingPong {
       counterTwo.locReset();
     }
   }
-
-  makeHandler(newMakeCounter, game) {
-    let counter = 0;
-    const handleCounter = game.debounce(() => {
-      if ((counter % 2) === 1) {
-        newMakeCounter.setCount() // прибавляем счет
-      } else {
-        newMakeCounter.sub()
-      }
-      counter = 0;
-    }, 250);
-    return () => {
-      counter += 1;
-      handleCounter();
-    };
-  };
-
-
-  incrementLeft(leftCounter, rightCounter, game) {
-    this.makeHandler(leftCounter, game)
-    // this.addScore(leftCounter, rightCounter)
-  }
-
-  // incrementRight(rightCounter, game) {
-  //   this.makeHandler(rightCounter, game)
-  // }
 };
